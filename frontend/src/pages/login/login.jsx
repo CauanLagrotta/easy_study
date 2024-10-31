@@ -37,7 +37,7 @@ export function Login() {
   });
 
   const handleClickLogin = (values, { resetForm }) => {
-    Axios.post("http://localhost:5000/auth/", {
+    Axios.post("http://localhost:3001/auth/login", {
       useremail: values.useremail,
       userpassword: values.userpassword,
     })
@@ -49,7 +49,7 @@ export function Login() {
         }
       })
       .catch(() => {
-        toast.error("Senha inválida", {
+        toast.error("Email ou senha inválidos", {
           icon: false,
           position: "bottom-left",
           autoClose: 3000,
@@ -103,7 +103,7 @@ export function Login() {
             </div>
 
             <Link to="/register">Cadastre-se</Link>
-            <Link to="/forgot-password">Esqueceu sua senha?</Link>
+            <Link to="/forgot_password">Esqueceu sua senha?</Link>
 
             <button type="submit">Entrar</button>
           </Form>

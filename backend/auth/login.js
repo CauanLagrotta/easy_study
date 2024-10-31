@@ -9,7 +9,7 @@ import db from "../db/db.js";
 const loginRoute = express.Router();
 
 // login
-loginRoute.post("/", (req, res) => {
+loginRoute.post("/login", (req, res) => {
   const { useremail, userpassword } = req.body;
 
   db.get("SELECT * FROM users WHERE useremail = ?", [useremail], (err, user) => {
@@ -30,7 +30,7 @@ loginRoute.post("/", (req, res) => {
           res.cookie("token", accessToken);
           res.send({ msg: "Login efetuado com sucesso", accessToken });
         } else {
-          res.status(400).send({ msg: "Senha inválida" });
+          res.status(400).send({ msg: "Senha incorreta" });
         }
       });
     } else {

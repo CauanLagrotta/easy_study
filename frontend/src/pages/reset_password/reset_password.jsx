@@ -1,3 +1,4 @@
+import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useNavigate } from "react-router-dom";
@@ -8,52 +9,48 @@ import "react-toastify/dist/ReactToastify.css";
 import * as yup from "yup";
 import Axios from "axios";
 
-export function Register() {
+export function ResetPassword() {
   const [showPassword, setShowPassword] = useState(false);
+  const { userid, token } = useParams();
   const navigate = useNavigate();
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
-    const type = showPassword ? "password" : "text";
-    document.getElementById("password").setAttribute("type", type);
-    document.getElementById("confirmPassword").setAttribute("type", type);
+
+    const passwordField = document.getElementById("password");
+    const confirmPasswordField = document.getElementById("confirmPassword");
+
+    if (passwordField && confirmPasswordField) {
+      const type = showPassword ? "password" : "text";
+
+      passwordField.setAttribute("type", type);
+      confirmPasswordField.setAttribute("type", type);
+    }
   };
 
-  const validationRegister = yup.object().shape({
-    name: yup.string().required("Este campo é obrigatório"),
-    email: yup
+  const validationResetPassword = yup.object().shape({
+    userpassword: yup
       .string()
-      .email("Email inválido")
+      .min(8, "A nova senha deve ter no mínimo 8 caracteres")
       .required("Este campo é obrigatório"),
-    password: yup
+    userconfirmPassword: yup
       .string()
-      .min(8, "A senha deve ter no mínimo 8 caracteres")
-      .required("Este campo é obrigatório"),
-    confirmPassword: yup
-      .string()
-      .oneOf([yup.ref("password"), null], "As senhas devem ser iguais")
+      .oneOf([yup.ref("userpassword"), null], "As senhas devem ser iguais")
       .required("Este campo é obrigatório"),
   });
 
-  const handleClickRegister = (values, { resetForm }) => {
-    Axios.post("http://localhost:3001/auth/register", {
-      username: values.name,
-      useremail: values.email,
-      userpassword: values.password,
+  const handleResetPassword = (values, { resetForm }) => {
+    Axios.post(`http://localhost:3001/auth/reset-password/${userid}/${token}`, {
+      userpassword: values.userpassword,
     })
       .then((res) => {
-        if (res.data.msg === "Cadastrado com sucesso!") {
-          toast.success(res.data.msg, { position: "bottom-left" });
+        if (res.data.msg === "Senha atualizada com sucesso") {
           navigate("/login");
           resetForm();
         }
       })
-      .catch((error) => {
-        const errorMsg =
-          error.response && error.response.data && error.response.data.msg
-            ? error.response.data.msg
-            : "Erro ao concluir registro!";
-        toast.error(errorMsg, {
+      .catch(() => {
+        toast.error("Erro ao redefinir senha!", {
           position: "bottom-left",
           autoClose: 3000,
           hideProgressBar: false,
@@ -69,68 +66,27 @@ export function Register() {
     <div className="container">
       <div className="contents">
         <div className="box-tittle">
-          <h1>Registrar-se</h1>
+          <h1>Redefinir Senha</h1>
         </div>
 
         <Formik
-          initialValues={{
-            name: "",
-            email: "",
-            password: "",
-            confirmPassword: "",
-          }}
-          onSubmit={handleClickRegister}
-          validationSchema={validationRegister}
+          initialValues={{ userpassword: "", userconfirmPassword: "" }}
+          onSubmit={handleResetPassword}
+          validationSchema={validationResetPassword}
         >
           <Form className="login-form">
-            <div className="login-form-group">
-              <Field
-                name="name"
-                className="form-field"
-                placeholder="Nome de usuário"
-              />
-              <ErrorMessage component="span" name="name" className="form-error" />
-            </div>
-            <div className="login-form-group">
-              <Field
-                name="email"
-                className="form-field"
-                placeholder="Email"
-                type="email"
-              />
-              <ErrorMessage component="span" name="email" className="form-error" />
-            </div>
             <div className="login-form-group">
               <div className="show-password-container">
                 <Field
                   id="password"
-                  name="password"
+                  name="userpassword"
                   className="form-field"
-                  placeholder="Senha"
+                  placeholder="Nova Senha"
                   type="password"
                 />
                 <button
-                  type="button"
                   className="show-password"
-                  onClick={handleClickShowPassword}
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </button>
-              </div>
-              <ErrorMessage component="span" name="password" className="form-error" />
-            </div>
-            <div className="login-form-group">
-              <div className="show-password-container">
-                <Field
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  className="form-field"
-                  placeholder="Confirme sua senha"
-                  type="password"
-                />
-                <button
                   type="button"
-                  className="show-password"
                   onClick={handleClickShowPassword}
                 >
                   {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -138,16 +94,42 @@ export function Register() {
               </div>
               <ErrorMessage
                 component="span"
-                name="confirmPassword"
+                name="userpassword"
                 className="form-error"
               />
             </div>
+
+            <div className="login-form-group">
+              <div className="show-password-container">
+                <Field
+                  id="confirmPassword"
+                  name="userconfirmPassword"
+                  className="form-field"
+                  placeholder="Confirme a Nova Senha"
+                  type="password"
+                />
+                <button
+                  className="show-password"
+                  type="button"
+                  onClick={handleClickShowPassword}
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </button>
+              </div>
+              <ErrorMessage
+                component="span"
+                name="userconfirmPassword"
+                className="form-error"
+              />
+            </div>
+
             <button className="login-button" type="submit">
-              Registrar-se
+              Redefinir Senha
             </button>
           </Form>
         </Formik>
       </div>
+
       <ToastContainer />
     </div>
   );
