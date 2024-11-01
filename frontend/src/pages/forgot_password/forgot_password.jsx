@@ -15,12 +15,12 @@ export function ForgotPassword() {
   });
 
   const handleForgotPassword = (values, { resetForm }) => {
-    console.log("Valores enviados:", values); // Adicione este log
+    console.log("Valores enviados:", values); 
     Axios.post("http://localhost:3001/auth/forgot-password", {
       useremail: values.useremail,
     })
       .then((res) => {
-        console.log("Resposta do servidor:", res.data); // Adicione este log
+        console.log("Resposta do servidor:", res.data); 
         if (res.data.msg === "Email para redefinição de senha enviado com sucesso") {
           toast.success("Email para redefinição de senha enviado com sucesso", {
             position: "bottom-left",
@@ -35,7 +35,7 @@ export function ForgotPassword() {
         }
       })
       .catch((err) => {
-        console.error("Erro ao enviar o email:", err); // Adicione este log
+        console.error("Erro ao enviar o email:", err);
         toast.error("Erro ao enviar link para redefinir a senha", {
           position: "bottom-left",
           autoClose: 3000,

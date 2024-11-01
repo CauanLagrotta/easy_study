@@ -1,11 +1,11 @@
-import generateResetToken from "./reset-password.js";
+import { generateResetToken } from "./reset-password.js";
 import express from "express";
 import db from "../db/db.js";
 import nodemailer from "nodemailer";
 
 const forgotPasswordRoute = express.Router();
 
-forgotPasswordRoute.use(express.json());
+forgotPasswordRoute.use(express.json( { extended: false } ));
 
 const transporter = nodemailer.createTransport({
   host: process.env.BREVO_SMTP_HOST,
@@ -47,6 +47,8 @@ forgotPasswordRoute.post("/forgot-password", (req, res) => {
         const resetToken = generateResetToken(useremail, result[0].id);
         console.log("resetToken:", resetToken);
         const resetURL = `http://localhost:5173/auth/reset-password/${result[0].id}/${resetToken}`;
+
+        
 
         const mailOptions = {
           from: "cauanlagrotta.dev@gmail.com",
