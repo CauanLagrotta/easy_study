@@ -10,7 +10,7 @@ export function Header() {
   Axios.defaults.withCredentials = true;
 
   useEffect(() => {
-    Axios.get("http://localhost:5000/auth/header")
+    Axios.get("http://localhost:3001/auth/header")
       .then((res) => {
         console.log("Header: ", res.data);
 
@@ -25,7 +25,7 @@ export function Header() {
   }, []);
 
   const handleLogout = () => {
-    Axios.get("http://localhost:5000/auth/logout")
+    Axios.get("http://localhost:3001/auth/logout")
       .then(() => {
         location.reload(true);
       })

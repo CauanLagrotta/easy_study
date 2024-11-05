@@ -2,7 +2,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import { Home } from "../pages/home/home.jsx";
 import { Login } from "../pages/login/login.jsx";
 import { Register } from "../pages/register/register.jsx";
-import { CrudLogin } from "../pages/crud_login/crudLogin.jsx";
+import { CrudLogin } from "../pages/crud_login/crud-login.jsx";
 
 export function Router() {
     const location = useLocation();

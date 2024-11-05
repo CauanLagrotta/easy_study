@@ -5,7 +5,7 @@ import db from "../db/db.js";
 const saltRounds = 10;
 const registerRoute = express.Router();
 
-registerRoute.post("/", (req, res) => {
+registerRoute.post("/register", (req, res) => {
   const { username, useremail, userpassword } = req.body;
   const defaultStaffValue = 0;
 

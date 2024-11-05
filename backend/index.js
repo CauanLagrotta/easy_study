@@ -9,7 +9,7 @@ import db from "./db/db.js";
 
 dotenv.config();
 
-const port = 5000;
+const port = 3001;
 const app = express();
 
 app.use(cors({
@@ -24,5 +24,5 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/", routes);
 
 app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+  console.log(`Running on http://localhost:${port}`);
 });

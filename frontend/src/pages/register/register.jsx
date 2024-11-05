@@ -36,7 +36,7 @@ export function Register() {
   });
 
   const handleClickRegister = (values, { resetForm }) => {
-    Axios.post("http://localhost:5000/register", {
+    Axios.post("http://localhost:3001/auth/register", {
       username: values.name,
       useremail: values.email,
       userpassword: values.password,
