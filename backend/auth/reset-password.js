@@ -38,11 +38,16 @@ resetPasswordRoute.get("/reset-password/:userid/:token", (req, res) => {
 resetPasswordRoute.post("/reset-password/:userid/:token", (req, res) => {
   const { userid, token } = req.params;
   const { userpassword } = req.body;
+  
+  console.log("Token: ", token);
+  console.log("userid: ", userid);
+
   const secret = process.env.TOKEN;
 
   try {
     const payload = jwt.verify(token, secret);
     if (payload.id !== parseInt(userid, 10)) {
+      console.log("payload ", payload);
       return res.status(401).send({ msg: "Autenticação inválida" });
     }
 
