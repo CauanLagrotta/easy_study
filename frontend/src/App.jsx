@@ -4,7 +4,7 @@ import "./App.css";
 
 export function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter> 
       <Router />
     </BrowserRouter>
   )

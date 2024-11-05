@@ -35,6 +35,9 @@ db.serialize(() => {
       }
     }
   );
+
+  //proxima tabela aqui
+
 }) ;
 
 
