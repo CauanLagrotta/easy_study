@@ -36,8 +36,14 @@ export function Header() {
     <div>
       <div>
         <Link to="/">Home</Link>
+        <Link to="/form_contact">Contato</Link>
 
-        {auth && staff === 1 && <Link to="/crud_login">Crud Login</Link>}
+        {auth && staff === 1 && (
+          <>
+            <Link to="/crud_login">Crud Login</Link>
+            <Link to="/crud_contact">Crud Contato</Link>
+          </>
+        )}
 
         {auth ? (
           <Logout onClick={handleLogout} />

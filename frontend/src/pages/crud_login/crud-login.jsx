@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import Axios from 'axios';
 import { CardLogin } from './card-login.jsx';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export function CrudLogin() {
     const [values, setValues] = useState({
@@ -28,12 +30,33 @@ export function CrudLogin() {
                 useremail: values.useremail,
                 userpassword: values.userpassword,
                 staff: values.staff,
+                created_at: values.created_at,
             });
+
+            toast.success("Usuario inserido com sucesso", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            })
 
             const response = await Axios.get("http://localhost:3001/crud/crud-login");
             setListLogin(response.data);
         } catch (error) {
             console.error("Erro ao cadastrar login:", error);
+
+            toast.error("Erro ao cadastrar login", {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            })
         }
 
         setValues({
@@ -60,8 +83,6 @@ export function CrudLogin() {
     return (
         <div className="app--container">
             <div className="register--container">
-                <h1 className="register--title">Cadastro de Login</h1>
-
                 <input
                     autoComplete="off"
                     value={values.username}
@@ -118,6 +139,8 @@ export function CrudLogin() {
                     staff={value.staff}
                 />
             ))}
+
+            <ToastContainer/>
         </div>
     );
 }

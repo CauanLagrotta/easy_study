@@ -74,8 +74,8 @@ export function DialogLogin(props) {
                 <DialogContent>
                     <TextField onChange={handleChangeValues} autoFocus margin="dense" id="id" name="id" label="id" type="text" fullWidth value={editValues.id} disabled/>
                     <TextField onChange={handleChangeValues} autoFocus margin="dense" id="username" name="username" label="Usuário" type="text" fullWidth value={editValues.username} />
-                    <TextField onChange={handleChangeValues} autoFocus margin="dense" id="email" name="useremail" label="Email" type="email" fullWidth value={editValues.email} />
-                    <TextField onChange={handleChangeValues} autoFocus margin="dense" id="password" name="userpassword" label="Senha" type="password" fullWidth value={editValues.password} disabled />
+                    <TextField onChange={handleChangeValues} autoFocus margin="dense" id="email" name="useremail" label="Email" type="email" fullWidth value={editValues.useremail} />
+                    <TextField onChange={handleChangeValues} autoFocus margin="dense" id="password" name="userpassword" label="Senha" type="password" fullWidth value={editValues.userpassword} disabled />
                     <Select id="staff" name="staff" value={editValues.staff} onChange={handleChangeValues} fullWidth>
                         <MenuItem value={0}>Usuário Comum</MenuItem>
                         <MenuItem value={1}>Administrador</MenuItem>

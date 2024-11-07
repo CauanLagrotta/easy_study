@@ -77,7 +77,7 @@ export function Login() {
                 <Field
                   type="email"
                   name="useremail"
-                  placeholder="useremail@example.com"
+                  placeholder="digite seu email..."
                 />
                 <ErrorMessage name="useremail" component="span" />
               </div>
@@ -96,7 +96,7 @@ export function Login() {
                   id="password"
                   type={showPassword ? "text" : "password"}
                   name="userpassword"
-                  placeholder="Senha de no mínimo 8 dígitos"
+                  placeholder="digite sua senha..."
                 />
                 <ErrorMessage name="userpassword" component="span" />
               </div>

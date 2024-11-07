@@ -36,9 +36,26 @@ db.serialize(() => {
     }
   );
 
-  //proxima tabela aqui
+  db.serialize(() => {
+    db.run(
+      `CREATE TABLE IF NOT EXISTS contactform (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          username TEXT NOT NULL,
+          useremail TEXT NOT NULL,
+          usernumber TEXT NOT NULL,
+          usermessage TEXT NOT NULL,
+          contact_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )`,
+      (err) => {
+        if (err) {
+          console.log("Erro ao criar tabela de contato: ", err);
+        } else {
+          console.log("Tabela de posts criada");
+        }
+      }
+    );
+  });
 
-}) ;
-
+});
 
 export default db;
